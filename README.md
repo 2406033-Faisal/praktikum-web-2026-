@@ -12,9 +12,12 @@
 
 
 ## Tugas 
-### Spesifikasi Perangkat,
+### Spesifikasi Perangkat
+
 - **Sistem operasi** : windows 
-- **Kapasitas Ram** : 8
+- **Kapasitas Ram** : 8 GB
 - **Versi Node.js** : v24.21.0
 - **Versi Git** : git version 2.54.0.windows.1
+- **Laptop** : Asus TUF A15
+- **Processor** : NVIDIA Geforce 2050
 
