@@ -10,3 +10,11 @@
 - Uji coba Laragon MySQL berjalan pada Port 3306.
 - Konfigurasi identitas Git global.
 
+
+## Tugas 
+### Spesifikasi Perangkat,
+- **Sistem operasi** : windows 
+- **Kapasitas Ram** : 8
+- **Versi Node.js** : v24.21.0
+- **Versi Git** : git version 2.54.0.windows.1
+
