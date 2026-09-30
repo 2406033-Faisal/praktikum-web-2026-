@@ -14,7 +14,7 @@
 ## Tugas 
 ### Spesifikasi Perangkat
 
-- **Sistem operasi** : windows 
+- **Sistem operasi** : windows 11 
 - **Kapasitas Ram** : 8 GB
 - **Versi Node.js** : v24.21.0
 - **Versi Git** : git version 2.54.0.windows.1
