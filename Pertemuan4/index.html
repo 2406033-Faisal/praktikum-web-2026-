@@ -1,109 +1,109 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Portfolio Tracker - Modul 4</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, sans-serif; }
-    body { background: #f1f5f9; color: #0f172a; padding: 30px 15px; }
-    .container { max-width: 1000px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px -1px rgba(0,0,0,.1); }
-    h1 { color: #1e3a8a; font-size: 26px; margin-bottom: 5px; }
-    .subtitle { color: #64748b; margin-bottom: 22px; font-size: 14px; }
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 25px; }
-    .stat-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; text-align: center; }
-    .stat-card h3 { font-size: 12px; color: #64748b; text-transform: uppercase; margin-bottom: 7px; }
-    .stat-card p { font-size: 21px; font-weight: 700; color: #1e3a8a; overflow-wrap: anywhere; }
-    .panel { border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin-bottom: 22px; }
-    .panel h2 { font-size: 18px; margin-bottom: 14px; color: #1e3a8a; }
-    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
-    label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
-    input[type="text"], input[type="number"], select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; background: #fff; font-size: 14px; }
-    .checkbox-line { display: flex; align-items: center; gap: 8px; margin: 24px 0 0; font-size: 14px; }
-    .checkbox-line label { margin: 0; }
-    button { cursor: pointer; border: 0; border-radius: 6px; padding: 9px 13px; font-size: 13px; font-weight: 600; }
-    .btn-primary { background: #1e3a8a; color: white; margin-top: 15px; }
-    .btn-filter { background: #fff; border: 1px solid #cbd5e1; color: #334155; }
-    .btn-filter.active, .btn-filter:hover { background: #1e3a8a; color: #fff; border-color: #1e3a8a; }
-    .filter-group { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-    .search-input { margin-bottom: 18px; }
-    .project-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 14px; background: #fff; }
-    .project-info { min-width: 0; }
-    .project-info h4 { font-size: 16px; color: #0f172a; margin: 7px 0 5px; overflow-wrap: anywhere; }
-    .project-category { display: inline-block; font-size: 12px; color: #0369a1; background: #e0f2fe; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
-    .project-budget { font-size: 14px; color: #334155; font-weight: 600; }
-    .badge { display: inline-block; padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 10px; }
-    .badge-success { background: #dcfce7; color: #166534; }
-    .badge-pending { background: #fef9c3; color: #854d0e; }
-    .actions { display: flex; flex-direction: column; gap: 7px; flex-shrink: 0; }
-    .btn-toggle { background: #dbeafe; color: #1d4ed8; }
-    .btn-delete { background: #fee2e2; color: #b91c1c; }
-    .empty { text-align: center; color: #64748b; padding: 24px 10px; }
-    @media (max-width: 560px) {
-      body { padding: 12px 8px; }
-      .container { padding: 16px; }
-      .project-card { align-items: flex-start; }
-      .project-info h4 { font-size: 14px; }
-      .actions button { padding: 8px; }
-    }
-  </style>
-</head>
-<body>
-  <main class="container">
-    <h1>Interactive Portfolio Tracker</h1>
-    <p class="subtitle">Modul 4: Pengolahan Logika Data, Form Handling, Live Search, dan Interaktivitas DOM</p>
+  <!DOCTYPE html>
+  <html lang="id">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Portfolio Tracker - Modul 4</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, sans-serif; }
+      body { background: #f1f5f9; color: #0f172a; padding: 30px 15px; }
+      .container { max-width: 1000px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px -1px rgba(0,0,0,.1); }
+      h1 { color: #1e3a8a; font-size: 26px; margin-bottom: 5px; }
+      .subtitle { color: #64748b; margin-bottom: 22px; font-size: 14px; }
+      .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 25px; }
+      .stat-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; text-align: center; }
+      .stat-card h3 { font-size: 12px; color: #64748b; text-transform: uppercase; margin-bottom: 7px; }
+      .stat-card p { font-size: 21px; font-weight: 700; color: #1e3a8a; overflow-wrap: anywhere; }
+      .panel { border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin-bottom: 22px; }
+      .panel h2 { font-size: 18px; margin-bottom: 14px; color: #1e3a8a; }
+      .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
+      label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+      input[type="text"], input[type="number"], select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; background: #fff; font-size: 14px; }
+      .checkbox-line { display: flex; align-items: center; gap: 8px; margin: 24px 0 0; font-size: 14px; }
+      .checkbox-line label { margin: 0; }
+      button { cursor: pointer; border: 0; border-radius: 6px; padding: 9px 13px; font-size: 13px; font-weight: 600; }
+      .btn-primary { background: #1e3a8a; color: white; margin-top: 15px; }
+      .btn-filter { background: #fff; border: 1px solid #cbd5e1; color: #334155; }
+      .btn-filter.active, .btn-filter:hover { background: #1e3a8a; color: #fff; border-color: #1e3a8a; }
+      .filter-group { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+      .search-input { margin-bottom: 18px; }
+      .project-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 14px; background: #fff; }
+      .project-info { min-width: 0; }
+      .project-info h4 { font-size: 16px; color: #0f172a; margin: 7px 0 5px; overflow-wrap: anywhere; }
+      .project-category { display: inline-block; font-size: 12px; color: #0369a1; background: #e0f2fe; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+      .project-budget { font-size: 14px; color: #334155; font-weight: 600; }
+      .badge { display: inline-block; padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 10px; }
+      .badge-success { background: #dcfce7; color: #166534; }
+      .badge-pending { background: #fef9c3; color: #854d0e; }
+      .actions { display: flex; flex-direction: column; gap: 7px; flex-shrink: 0; }
+      .btn-toggle { background: #dbeafe; color: #1d4ed8; }
+      .btn-delete { background: #fee2e2; color: #b91c1c; }
+      .empty { text-align: center; color: #64748b; padding: 24px 10px; }
+      @media (max-width: 560px) {
+        body { padding: 12px 8px; }
+        .container { padding: 16px; }
+        .project-card { align-items: flex-start; }
+        .project-info h4 { font-size: 14px; }
+        .actions button { padding: 8px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <h1>Interactive Portfolio Tracker</h1>
+      <p class="subtitle">Modul 4: Pengolahan Logika Data, Form Handling, Live Search, dan Interaktivitas DOM</p>
 
-    <section class="stats-grid" aria-label="Ringkasan proyek">
-      <div class="stat-card"><h3>Total Proyek</h3><p id="stat-total-projects">0</p></div>
-      <div class="stat-card"><h3>Total Anggaran</h3><p id="stat-total-budget">Rp 0</p></div>
-      <div class="stat-card"><h3>Proyek Selesai</h3><p id="stat-completed-projects">0</p></div>
-      <div class="stat-card"><h3>Anggaran Proyek Selesai</h3><p id="stat-completed-budget">Rp 0</p></div>
-    </section>
+      <section class="stats-grid" aria-label="Ringkasan proyek">
+        <div class="stat-card"><h3>Total Proyek</h3><p id="stat-total-projects">0</p></div>
+        <div class="stat-card"><h3>Total Anggaran</h3><p id="stat-total-budget">Rp 0</p></div>
+        <div class="stat-card"><h3>Proyek Selesai</h3><p id="stat-completed-projects">0</p></div>
+        <div class="stat-card"><h3>Anggaran Proyek Selesai</h3><p id="stat-completed-budget">Rp 0</p></div>
+      </section>
 
-    <section class="panel">
-      <h2>Tambah Proyek Baru</h2>
-      <form id="project-form">
-        <div class="form-grid">
-          <div>
-            <label for="project-title">Judul Proyek</label>
-            <input id="project-title" name="title" type="text" placeholder="Masukkan judul proyek" required>
+      <section class="panel">
+        <h2>Tambah Proyek Baru</h2>
+        <form id="project-form">
+          <div class="form-grid">
+            <div>
+              <label for="project-title">Judul Proyek</label>
+              <input id="project-title" name="title" type="text" placeholder="Masukkan judul proyek" required>
+            </div>
+            <div>
+              <label for="project-category">Kategori</label>
+              <select id="project-category" name="category" required>
+                <option value="Web App">Web App</option>
+                <option value="Mobile App">Mobile App</option>
+                <option value="Desktop App">Desktop App</option>
+                <option value="UI/UX Design">UI/UX Design</option>
+              </select>
+            </div>
+            <div>
+              <label for="project-budget">Estimasi Anggaran (Rp)</label>
+              <input id="project-budget" name="budget" type="number" min="1" step="1" placeholder="Contoh: 2500000" required>
+            </div>
           </div>
-          <div>
-            <label for="project-category">Kategori</label>
-            <select id="project-category" name="category" required>
-              <option value="Web App">Web App</option>
-              <option value="Mobile App">Mobile App</option>
-              <option value="Desktop App">Desktop App</option>
-              <option value="UI/UX Design">UI/UX Design</option>
-            </select>
+          <div class="checkbox-line">
+            <input id="project-completed" name="completed" type="checkbox">
+            <label for="project-completed">Sudah Selesai</label>
           </div>
-          <div>
-            <label for="project-budget">Estimasi Anggaran (Rp)</label>
-            <input id="project-budget" name="budget" type="number" min="1" step="1" placeholder="Contoh: 2500000" required>
-          </div>
+          <button class="btn-primary" type="submit">Tambah Proyek</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2>Daftar Proyek</h2>
+        <label for="project-search">Cari nama proyek</label>
+        <input class="search-input" id="project-search" type="text" placeholder="Ketik nama proyek untuk mencari...">
+        <div class="filter-group" aria-label="Filter kategori">
+          <button type="button" class="btn-filter active" data-category="Semua">Semua Proyek</button>
+          <button type="button" class="btn-filter" data-category="Web App">Web App</button>
+          <button type="button" class="btn-filter" data-category="Desktop App">Desktop App</button>
+          <button type="button" class="btn-filter" data-category="Mobile App">Mobile App</button>
+          <button type="button" class="btn-filter" data-category="UI/UX Design">UI/UX Design</button>
         </div>
-        <div class="checkbox-line">
-          <input id="project-completed" name="completed" type="checkbox">
-          <label for="project-completed">Sudah Selesai</label>
-        </div>
-        <button class="btn-primary" type="submit">Tambah Proyek</button>
-      </form>
-    </section>
-
-    <section class="panel">
-      <h2>Daftar Proyek</h2>
-      <label for="project-search">Cari nama proyek</label>
-      <input class="search-input" id="project-search" type="text" placeholder="Ketik nama proyek untuk mencari...">
-      <div class="filter-group" aria-label="Filter kategori">
-        <button type="button" class="btn-filter active" data-category="Semua">Semua Proyek</button>
-        <button type="button" class="btn-filter" data-category="Web App">Web App</button>
-        <button type="button" class="btn-filter" data-category="Desktop App">Desktop App</button>
-        <button type="button" class="btn-filter" data-category="Mobile App">Mobile App</button>
-        <button type="button" class="btn-filter" data-category="UI/UX Design">UI/UX Design</button>
-      </div>
-      <div id="project-list" aria-live="polite"></div>
-    </section>
-  </main>
-  <script src="main.js"></script>
-</body>
-</html>
+        <div id="project-list" aria-live="polite"></div>
+      </section>
+    </main>
+    <script src="main.js"></script>
+  </body>
+  </html>
