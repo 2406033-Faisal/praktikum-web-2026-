@@ -34,6 +34,30 @@ h2 {
     font-size: 22px;
 }
 
+/* Counter tugas */
+.task-counter {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding: 12px;
+    background-color: #eff6ff;
+    border-radius: 8px;
+}
+
+.task-counter p {
+    font-size: 12px;
+    text-align: center;
+    color: #1e40af;
+}
+
+.task-counter span {
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
 /* Bagian input dan tombol tambah */
 .input-section {
     display: flex;
@@ -44,11 +68,16 @@ h2 {
 /* Input tugas */
 input[type="text"] {
     flex: 1;
+    min-width: 0;
     padding: 10px 14px;
     border: 1px solid #cbd5e1;
     border-radius: 6px;
     font-size: 14px;
     outline: none;
+}
+
+input[type="text"]:focus {
+    border-color: #1d4ed8;
 }
 
 /* Input ketika terjadi kesalahan */
@@ -68,7 +97,6 @@ button.add-btn {
     cursor: pointer;
 }
 
-/* Efek hover tombol tambah */
 button.add-btn:hover {
     background-color: #1e40af;
 }
@@ -79,6 +107,23 @@ button.add-btn:hover {
     font-size: 12px;
     margin-bottom: 14px;
     display: none;
+}
+
+/* Tombol bersihkan tugas selesai */
+.clear-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    background-color: #1240be;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.clear-btn:hover {
+    background-color: #d91f06;
 }
 
 /* Daftar tugas */
@@ -92,9 +137,11 @@ button.add-btn:hover {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 10px;
     padding: 10px 12px;
     background-color: #f1f5f9;
     border-radius: 6px;
+    border-left: 4px solid transparent;
     margin-bottom: 8px;
 }
 
@@ -114,13 +161,14 @@ button.add-btn:hover {
 .todo-text {
     font-size: 14px;
     flex: 1;
-    margin-right: 10px;
+    overflow-wrap: anywhere;
 }
 
 /* Kumpulan tombol aksi */
 .todo-actions {
     display: flex;
     gap: 6px;
+    flex-shrink: 0;
 }
 
 /* Tombol aksi */
@@ -151,4 +199,32 @@ button.add-btn:hover {
 
 .delete-btn:hover {
     background-color: #b91c1c;
+}
+
+/* Pesan ketika daftar kosong */
+.empty-message {
+    text-align: center;
+    color: #64748b;
+    font-size: 13px;
+    padding: 10px;
+}
+
+/* Tampilan layar kecil */
+@media (max-width: 400px) {
+    .todo-app {
+        padding: 16px;
+    }
+
+    .task-counter {
+        flex-direction: column;
+    }
+
+    .todo-item {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .todo-actions {
+        align-self: flex-end;
+    }
 }

@@ -4,21 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplikasi To-Do List - Modul 5</title>
-    <link rel="stylesheet" href="style.css">    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="todo-app">
         <h2>Daftar Tugas Saya</h2>
-        <!-- From infut tugas-->
+
+        <!-- Counter tugas -->
+        <div class="task-counter">
+            <p>Total Tugas: <span id="totalTasks">0</span></p>
+            <p>Tugas Selesai: <span id="completedTasks">0</span></p>
+            <p>Belum Selesai: <span id="pendingTasks">0</span></p>
+        </div>
+
+        <!-- Form input tugas -->
         <form id="todoForm" novalidate>
-            <div class=" input-section">
-                <input type="text" id="taskInput" placeholder="Ketikkan tugas baru anda..." >
+            <div class="input-section">
+                <input
+                    type="text"
+                    id="taskInput"
+                    placeholder="Ketikkan tugas baru Anda..."
+                >
                 <button type="submit" class="add-btn">Tambah</button>
             </div>
-            <div class="eror-massage" id="inputError">Tugas tidak boleh kosong atau kurang dari 3 karakter</div>
+
+            <div class="error-message" id="inputError"></div>
         </form>
-        <!-- Daftar Tugas-->
-         <ul Class="todo-list" id="todoList"></ul>
+
+        <!-- Tombol bersihkan tugas selesai -->
+        <button type="button" id="clearCompletedBtn" class="clear-btn">
+            Bersihkan Tugas Selesai
+        </button>
+
+        <!-- Daftar tugas -->
+        <ul class="todo-list" id="todoList"></ul>
     </div>
 
     <script src="script.js"></script>
