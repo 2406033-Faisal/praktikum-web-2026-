@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data Mahasiswa</title>
+  <style>
+    :root {
+      --ink: #1b2437;
+      --muted: #5f6b85;
+      --line: #e3e8f2;
+      --bg: #eef2f9;
+      --primary: #3b4fd8;
+      --primary-dark: #2c3cae;
+      --warn: #e08a00;
+      --danger: #d6453d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+    header.hero {
+      background: linear-gradient(120deg, #26338f 0%, #3b4fd8 60%, #5b6cf0 100%);
+      color: #fff;
+      padding: 40px 24px 84px;
+    }
+    .wrap { max-width: 960px; margin: 0 auto; }
+    header.hero h1 { margin: 0 0 6px; font-size: 30px; letter-spacing: -0.02em; }
+    header.hero p { margin: 0; opacity: .85; font-size: 15px; }
+    main.wrap { margin-top: -56px; padding: 0 16px 40px; }
+
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 24px 26px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 24px rgba(30, 45, 110, .10);
+    }
+    .card h2 { margin: 0 0 16px; font-size: 18px; }
+
+    form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    label { display: flex; flex-direction: column; gap: 5px; font-size: 13px; font-weight: 600; color: var(--muted); }
+    input[type="text"], input[type="email"], input[type="search"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid var(--line);
+      border-radius: 9px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--ink);
+      background: #f8faff;
+      transition: border-color .15s, box-shadow .15s, background .15s;
+    }
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(59, 79, 216, .15);
+    }
+    .actions { grid-column: 1 / -1; display: flex; gap: 10px; }
+
+    button {
+      padding: 10px 18px;
+      border: 0;
+      border-radius: 9px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      color: #fff;
+      background: var(--primary);
+      transition: transform .1s, background .15s;
+    }
+    button:hover { background: var(--primary-dark); }
+    button:active { transform: translateY(1px); }
+    button:focus-visible { outline: 3px solid rgba(59, 79, 216, .4); outline-offset: 2px; }
+    button.secondary { background: #e8ecf6; color: var(--ink); }
+    button.secondary:hover { background: #d9dfef; }
+    button.edit, button.hapus { padding: 6px 12px; font-size: 13px; }
+    button.edit { background: #fff3dd; color: #9a5d00; }
+    button.edit:hover { background: #ffe5b3; }
+    button.hapus { background: #fde8e6; color: #b1302a; }
+    button.hapus:hover { background: #f9cfcb; }
+    [hidden] { display: none !important; }
+
+    .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+    #counter {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primary-dark);
+      background: #e8ebff;
+      padding: 7px 14px;
+      border-radius: 999px;
+    }
+    .search-box { position: relative; width: 100%; max-width: 280px; }
+    .search-ico { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); font-size: 14px; pointer-events: none; }
+    #search { padding-left: 34px; }
+    #counter::before { content: "👥 "; }
+
+    .table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 620px; }
+    th, td { text-align: left; padding: 12px 14px; }
+    th { background: #f3f5fc; color: var(--muted); font-size: 13px; font-weight: 700; }
+    tbody tr { border-top: 1px solid var(--line); }
+    tbody tr:nth-child(even) { background: #fafbff; }
+    tbody tr:hover { background: #eef1ff; }
+    td.kosong { text-align: center; color: var(--muted); padding: 32px; }
+    td:last-child { white-space: nowrap; }
+
+    @media (max-width: 640px) {
+      form { grid-template-columns: 1fr; }
+      header.hero { padding: 28px 18px 72px; }
+      .card { padding: 18px; }
+      .search-box { max-width: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <h1>🎓 Data Mahasiswa</h1>
+      <p>Kelola data mahasiswa kampus: tambah, ubah, cari, dan hapus.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+  <div class="card">
+    <h2 id="judul-form">➕ Tambah mahasiswa</h2>
+    <form id="form-mahasiswa">
+      <input type="hidden" id="id">
+      <label>🪪 NIM<input type="text" id="nim" placeholder="Contoh: 2406001" required></label>
+      <label>👤 Nama<input type="text" id="nama" placeholder="Nama lengkap" required></label>
+      <label>📚 Jurusan<input type="text" id="jurusan" placeholder="Contoh: Teknik Informatika" required></label>
+      <label>✉️ Email<input type="email" id="email" placeholder="nama@email.com" required></label>
+      <div class="actions">
+        <button type="submit" id="btn-simpan">➕ Tambah</button>
+        <button type="button" id="btn-batal" class="secondary" hidden>✖ Batal</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card">
+    <div class="toolbar">
+      <!-- Fitur 3: counter total mahasiswa -->
+      <p id="counter">Total Mahasiswa Terdaftar: 0 Orang</p>
+      <!-- Fitur 1: kolom pencarian real-time -->
+      <div class="search-box"><span class="search-ico">🔍</span><input type="search" id="search" placeholder="Cari nama atau NIM..."></div>
+    </div>
+    <div class="table-scroll">
+    <table>
+      <thead>
+        <tr><th>🪪 NIM</th><th>👤 Nama</th><th>📚 Jurusan</th><th>✉️ Email</th><th>⚙️ Aksi</th></tr>
+      </thead>
+      <tbody id="tabel-body"></tbody>
+    </table>
+    </div>
+  </div>
+  </main>
+
+  <script>
+    const API = "/api/mahasiswa";
+    let listMahasiswa = [];
+
+    const form = document.getElementById("form-mahasiswa");
+    const inputId = document.getElementById("id");
+    const inputNim = document.getElementById("nim");
+    const inputNama = document.getElementById("nama");
+    const inputJurusan = document.getElementById("jurusan");
+    const inputEmail = document.getElementById("email");
+    const btnSimpan = document.getElementById("btn-simpan");
+    const btnBatal = document.getElementById("btn-batal");
+    const judulForm = document.getElementById("judul-form");
+    const inputSearch = document.getElementById("search");
+    const tbody = document.getElementById("tabel-body");
+    const counter = document.getElementById("counter");
+
+    function esc(teks) {
+      const d = document.createElement("div");
+      d.textContent = teks ?? "";
+      return d.innerHTML;
+    }
+
+    // Fitur 3: update counter dari jumlah data (bukan dari hasil filter)
+    function updateCounter() {
+      counter.textContent = `Total Mahasiswa Terdaftar: ${listMahasiswa.length} Orang`;
+    }
+
+
+    // Fitur 1: filter berdasarkan nama atau NIM
+    function renderTabel() {
+      const kata = inputSearch.value.trim().toLowerCase();
+      const hasil = listMahasiswa.filter((m) =>
+        String(m.nama).toLowerCase().includes(kata) ||
+        String(m.nim).toLowerCase().includes(kata)
+      );
+
+      if (hasil.length === 0) {
+        tbody.innerHTML = `<tr><td class="kosong" colspan="5">${kata ? "Tidak ada data yang cocok." : "Belum ada data mahasiswa."}</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = hasil.map((m) => `
+        <tr>
+          <td>${esc(m.nim)}</td>
+          <td>${esc(m.nama)}</td>
+          <td>${esc(m.jurusan)}</td>
+          <td>${esc(m.email)}</td>
+          <td>
+            <button class="edit" data-aksi="edit" data-id="${m.id}">✏️ Edit</button>
+            <button class="hapus" data-aksi="hapus" data-id="${m.id}">🗑️ Hapus</button>
+          </td>
+        </tr>`).join("");
+    }
+
+    async function muatData() {
+      try {
+        const res = await fetch(API);
+        listMahasiswa = await res.json();
+        updateCounter();
+        renderTabel();
+      } catch (err) {
+        alert("Gagal memuat data: " + err.message);
+      }
+    }
+
+    function resetForm() {
+      form.reset();
+      inputId.value = "";
+      btnSimpan.textContent = "➕ Tambah";
+      judulForm.textContent = "➕ Tambah mahasiswa";
+      btnBatal.hidden = true;
+    }
+
+    // Fitur 1: event listener 'input' untuk pencarian instan
+    inputSearch.addEventListener("input", renderTabel);
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const data = {
+        nim: inputNim.value.trim(),
+        nama: inputNama.value.trim(),
+        jurusan: inputJurusan.value.trim(),
+        email: inputEmail.value.trim(),
+      };
+      const idEdit = inputId.value;
+
+      // Fitur 2: validasi NIM duplikat dengan .some()
+      // (saat edit, data yang sedang diedit tidak dihitung sebagai duplikat)
+      const nimSudahAda = listMahasiswa.some(
+        (m) => String(m.nim) === data.nim && String(m.id) !== String(idEdit)
+      );
+      if (nimSudahAda) {
+        alert("NIM sudah terdaftar!");
+        return;
+      }
+
+      try {
+        const res = await fetch(idEdit ? `${API}/${idEdit}` : API, {
+          method: idEdit ? "PUT" : "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        const hasil = await res.json();
+        if (!hasil.success) {
+          alert(hasil.message);
+          return;
+        }
+        resetForm();
+        await muatData(); // counter ikut diperbarui di sini
+      } catch (err) {
+        alert("Gagal menyimpan: " + err.message);
+      }
+    });
+
+    tbody.addEventListener("click", async (e) => {
+      const tombol = e.target.closest("button");
+      if (!tombol) return;
+      const id = tombol.dataset.id;
+
+      if (tombol.dataset.aksi === "edit") {
+        const m = listMahasiswa.find((x) => String(x.id) === id);
+        if (!m) return;
+        inputId.value = m.id;
+        inputNim.value = m.nim;
+        inputNama.value = m.nama;
+        inputJurusan.value = m.jurusan;
+        inputEmail.value = m.email;
+        btnSimpan.textContent = "💾 Simpan perubahan";
+        judulForm.textContent = "✏️ Edit mahasiswa";
+        btnBatal.hidden = false;
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      if (tombol.dataset.aksi === "hapus") {
+        if (!confirm("Hapus data mahasiswa ini?")) return;
+        try {
+          const res = await fetch(`${API}/${id}`, { method: "DELETE" });
+          const hasil = await res.json();
+          if (!hasil.success) {
+            alert(hasil.message);
+            return;
+          }
+          await muatData(); // counter ikut diperbarui di sini
+        } catch (err) {
+          alert("Gagal menghapus: " + err.message);
+        }
+      }
+    });
+
+    btnBatal.addEventListener("click", resetForm);
+
+    muatData();
+  </script>
+</body>
+</html>
